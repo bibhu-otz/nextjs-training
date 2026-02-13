@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NEXTJS-ROUTING-TUTORIAL.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///r%3A/2.Travail/1.Enseignement/Cours/_1.Outils/2.Developpement/1.SCSS/main.css" type="text/css"><link rel="stylesheet" href="file:///d%3A/rdaros/Cours/_1.Outils/2.Developpement/1.SCSS/main.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="%F0%9F%93%9A-nextjs-app-router---complete-routing-tutorial">📚 Next.js App Router - Complete Routing Tutorial</h1>
+<h2 id="from-basics-to-advanced-patterns-nextjs-141516">From Basics to Advanced Patterns (Next.js 14/15/16)</h2>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-introduction-to-app-router">Introduction to App Router</a></li>
+<li><a href="#2-basic-file-based-routing">Basic File-Based Routing</a></li>
+<li><a href="#3-dynamic-routes">Dynamic Routes</a></li>
+<li><a href="#4-route-groups">Route Groups</a></li>
+<li><a href="#5-layouts-and-templates">Layouts and Templates</a></li>
+<li><a href="#6-loading-ui-and-streaming">Loading UI and Streaming</a></li>
+<li><a href="#7-error-handling">Error Handling</a></li>
+<li><a href="#8-not-found-pages">Not Found Pages</a></li>
+<li><a href="#9-parallel-routes">Parallel Routes</a></li>
+<li><a href="#10-intercepting-routes">Intercepting Routes</a></li>
+<li><a href="#11-case-study-product-quick-view-modal">Case Study: Modal Pattern</a></li>
+<li><a href="#12-navigation-and-linking">Navigation and Linking</a></li>
+<li><a href="#13-route-handlers-api-routes">Route Handlers (API Routes)</a></li>
+<li><a href="#14-middleware">Middleware</a></li>
+<li><a href="#15-best-practices">Best Practices</a></li>
+</ol>
+<hr>
+<h2 id="1-introduction-to-app-router">1. Introduction to App Router</h2>
+<h3 id="what-is-the-app-router">What is the App Router?</h3>
+<p>The <strong>App Router</strong> is Next.js's modern routing system introduced in Next.js 13. It uses the <code>app/</code> directory and leverages React Server Components by default.</p>
+<h3 id="key-differences-app-router-vs-pages-router">Key Differences: App Router vs Pages Router</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>App Router (<code>app/</code>)</th>
+<th>Pages Router (<code>pages/</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default Components</td>
+<td>Server Components</td>
+<td>Client Components</td>
+</tr>
+<tr>
+<td>Data Fetching</td>
+<td><code>async/await</code> in components</td>
+<td><code>getServerSideProps</code>, <code>getStaticProps</code></td>
+</tr>
+<tr>
+<td>Layouts</td>
+<td>Nested, preserved on navigation</td>
+<td>Re-render on every navigation</td>
+</tr>
+<tr>
+<td>Loading States</td>
+<td>Built-in <code>loading.tsx</code></td>
+<td>Manual implementation</td>
+</tr>
+<tr>
+<td>Error Handling</td>
+<td>Built-in <code>error.tsx</code></td>
+<td>Custom <code>_error.js</code></td>
+</tr>
+<tr>
+<td>Streaming</td>
+<td>Native support</td>
+<td>Limited</td>
+</tr>
+</tbody>
+</table>
+<h3 id="project-structure-overview">Project Structure Overview</h3>
+<pre class="hljs"><code><div>my-app/
+├── app/                    # App Router directory
+│   ├── layout.tsx          # Root layout (required)
+│   ├── page.tsx            # Home page (/)
+│   ├── globals.css         # Global styles
+│   └── [routes]/           # Route folders
+├── public/                 # Static assets
+├── src/                    # Optional: source directory
+└── next.config.js          # Next.js configuration
+</div></code></pre>
+<hr>
+<h2 id="2-basic-file-based-routing">2. Basic File-Based Routing</h2>
+<h3 id="core-concept">Core Concept</h3>
+<p>In Next.js App Router, <strong>folders define routes</strong> and <strong>special files define UI</strong>.</p>
+<h3 id="special-file-conventions">Special File Conventions</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page.tsx</code></td>
+<td>Makes a route publicly accessible</td>
+</tr>
+<tr>
+<td><code>layout.tsx</code></td>
+<td>Shared UI wrapper for a segment</td>
+</tr>
+<tr>
+<td><code>loading.tsx</code></td>
+<td>Loading UI (Suspense fallback)</td>
+</tr>
+<tr>
+<td><code>error.tsx</code></td>
+<td>Error UI (Error boundary)</td>
+</tr>
+<tr>
+<td><code>not-found.tsx</code></td>
+<td>404 UI</td>
+</tr>
+<tr>
+<td><code>template.tsx</code></td>
+<td>Re-rendered layout (no state preservation)</td>
+</tr>
+<tr>
+<td><code>default.tsx</code></td>
+<td>Fallback for parallel routes</td>
+</tr>
+<tr>
+<td><code>route.ts</code></td>
+<td>API endpoint</td>
+</tr>
+</tbody>
+</table>
+<h3 id="basic-route-examples">Basic Route Examples</h3>
+<h4 id="example-1-simple-pages">Example 1: Simple Pages</h4>
+<pre class="hljs"><code><div>app/
+├── page.tsx           →  /
+├── about/
+│   └── page.tsx       →  /about
+├── contact/
+│   └── page.tsx       →  /contact
+└── blog/
+    └── page.tsx       →  /blog
+</div></code></pre>
+<p><strong>Code: <code>app/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>// This is a Server Component by default
+export default function HomePage() {
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Welcome to My App&lt;/h1&gt;
+      &lt;p&gt;This is the home page.&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Code: <code>app/about/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function AboutPage() {
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;About Us&lt;/h1&gt;
+      &lt;p&gt;Learn more about our company.&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<h4 id="example-2-nested-routes">Example 2: Nested Routes</h4>
+<pre class="hljs"><code><div>app/
+└── blog/
+    ├── page.tsx           →  /blog
+    └── posts/
+        └── page.tsx       →  /blog/posts
+</div></code></pre>
+<h3 id="route-segments">Route Segments</h3>
+<p>Each folder in the <code>app</code> directory represents a <strong>route segment</strong> that maps to a <strong>URL segment</strong>.</p>
+<pre class="hljs"><code><div>app/dashboard/settings/page.tsx
+     ↓         ↓
+   /dashboard/settings
+</div></code></pre>
+<hr>
+<h2 id="3-dynamic-routes">3. Dynamic Routes</h2>
+<h3 id="what-are-dynamic-routes">What are Dynamic Routes?</h3>
+<p>Dynamic routes allow you to create pages that depend on dynamic data (like IDs, slugs, etc.).</p>
+<h3 id="syntax-patterns">Syntax Patterns</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Example</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[param]</code></td>
+<td><code>[id]</code></td>
+<td><code>/products/1</code>, <code>/products/abc</code></td>
+</tr>
+<tr>
+<td><code>[...param]</code></td>
+<td><code>[...slug]</code></td>
+<td><code>/blog/a</code>, <code>/blog/a/b/c</code></td>
+</tr>
+<tr>
+<td><code>[[...param]]</code></td>
+<td><code>[[...slug]]</code></td>
+<td><code>/</code>, <code>/blog/a</code>, <code>/blog/a/b</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-1-single-dynamic-segment">Example 1: Single Dynamic Segment</h3>
+<p><strong>Folder Structure:</strong></p>
+<pre class="hljs"><code><div>app/
+└── products/
+    ├── page.tsx           →  /products
+    └── [id]/
+        └── page.tsx       →  /products/1, /products/2, etc.
+</div></code></pre>
+<p><strong>Code: <code>app/products/[id]/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>// In Next.js 15+, params is a Promise
+interface ProductPageProps {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { id } = await params;
+  
+  // Fetch product data
+  const product = await getProduct(id);
+  
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Product: {product.name}&lt;/h1&gt;
+      &lt;p&gt;ID: {id}&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}
+
+// Optional: Generate static params at build time
+export function generateStaticParams() {
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+  ];
+}
+</div></code></pre>
+<h3 id="example-2-catch-all-segments">Example 2: Catch-All Segments</h3>
+<p><strong>Folder Structure:</strong></p>
+<pre class="hljs"><code><div>app/
+└── docs/
+    └── [...slug]/
+        └── page.tsx
+</div></code></pre>
+<p><strong>Code: <code>app/docs/[...slug]/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>interface DocsPageProps {
+  params: Promise&lt;{ slug: string[] }&gt;;
+}
+
+export default async function DocsPage({ params }: DocsPageProps) {
+  const { slug } = await params;
+  
+  // slug is an array: /docs/a/b/c → ['a', 'b', 'c']
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Documentation&lt;/h1&gt;
+      &lt;p&gt;Path: {slug.join(' / ')}&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Matching Behavior:</strong></p>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th><code>slug</code> value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/docs/react</code></td>
+<td><code>['react']</code></td>
+</tr>
+<tr>
+<td><code>/docs/react/hooks</code></td>
+<td><code>['react', 'hooks']</code></td>
+</tr>
+<tr>
+<td><code>/docs/react/hooks/useState</code></td>
+<td><code>['react', 'hooks', 'useState']</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-3-optional-catch-all-segments">Example 3: Optional Catch-All Segments</h3>
+<pre class="hljs"><code><div>app/
+└── shop/
+    └── [[...categories]]/
+        └── page.tsx
+</div></code></pre>
+<p><strong>Code: <code>app/shop/[[...categories]]/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>interface ShopPageProps {
+  params: Promise&lt;{ categories?: string[] }&gt;;
+}
+
+export default async function ShopPage({ params }: ShopPageProps) {
+  const { categories } = await params;
+  
+  if (!categories) {
+    return &lt;h1&gt;All Products&lt;/h1&gt;;
+  }
+  
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Category: {categories.join(' &gt; ')}&lt;/h1&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Matching Behavior:</strong></p>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th><code>categories</code> value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/shop</code></td>
+<td><code>undefined</code></td>
+</tr>
+<tr>
+<td><code>/shop/electronics</code></td>
+<td><code>['electronics']</code></td>
+</tr>
+<tr>
+<td><code>/shop/electronics/phones</code></td>
+<td><code>['electronics', 'phones']</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-route-groups">4. Route Groups</h2>
+<h3 id="what-are-route-groups">What are Route Groups?</h3>
+<p>Route groups let you <strong>organize routes without affecting the URL structure</strong>. They're created using parentheses: <code>(folderName)</code>.</p>
+<h3 id="use-cases">Use Cases</h3>
+<ol>
+<li><strong>Organize by feature/team</strong></li>
+<li><strong>Create multiple root layouts</strong></li>
+<li><strong>Opt specific segments into a layout</strong></li>
+</ol>
+<h3 id="example-1-organizing-by-feature">Example 1: Organizing by Feature</h3>
+<pre class="hljs"><code><div>app/
+├── (marketing)/
+│   ├── about/
+│   │   └── page.tsx       →  /about
+│   └── blog/
+│       └── page.tsx       →  /blog
+├── (shop)/
+│   ├── products/
+│   │   └── page.tsx       →  /products
+│   └── cart/
+│       └── page.tsx       →  /cart
+└── page.tsx               →  /
+</div></code></pre>
+<p>Note: <code>(marketing)</code> and <code>(shop)</code> are NOT part of the URL.</p>
+<h3 id="example-2-multiple-root-layouts">Example 2: Multiple Root Layouts</h3>
+<pre class="hljs"><code><div>app/
+├── (auth)/
+│   ├── layout.tsx         # Auth-specific layout (no navbar)
+│   ├── login/
+│   │   └── page.tsx       →  /login
+│   └── register/
+│       └── page.tsx       →  /register
+└── (main)/
+    ├── layout.tsx         # Main layout (with navbar)
+    ├── page.tsx           →  /
+    └── dashboard/
+        └── page.tsx       →  /dashboard
+</div></code></pre>
+<p><strong>Code: <code>app/(auth)/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    &lt;div className=&quot;auth-container&quot;&gt;
+      &lt;div className=&quot;auth-card&quot;&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Code: <code>app/(main)/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>import Navbar from '@/components/Navbar';
+
+export default function MainLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    &lt;&gt;
+      &lt;Navbar /&gt;
+      &lt;main&gt;{children}&lt;/main&gt;
+    &lt;/&gt;
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="5-layouts-and-templates">5. Layouts and Templates</h2>
+<h3 id="layouts">Layouts</h3>
+<p>Layouts are <strong>UI shared between multiple pages</strong>. They preserve state and don't re-render on navigation.</p>
+<h4 id="root-layout-required">Root Layout (Required)</h4>
+<p>Every app must have a root layout at <code>app/layout.tsx</code>:</p>
+<pre class="hljs"><code><div>// app/layout.tsx
+import type { Metadata } from 'next';
+import './globals.css';
+
+export const metadata: Metadata = {
+  title: 'My App',
+  description: 'Welcome to my application',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</div></code></pre>
+<h4 id="nested-layouts">Nested Layouts</h4>
+<p>Layouts can be nested. Child layouts wrap inside parent layouts:</p>
+<pre class="hljs"><code><div>app/
+├── layout.tsx              # Root layout
+└── dashboard/
+    ├── layout.tsx          # Dashboard layout (nested)
+    └── page.tsx
+</div></code></pre>
+<p><strong>Code: <code>app/dashboard/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    &lt;div className=&quot;dashboard&quot;&gt;
+      &lt;aside className=&quot;sidebar&quot;&gt;
+        &lt;nav&gt;
+          &lt;a href=&quot;/dashboard&quot;&gt;Overview&lt;/a&gt;
+          &lt;a href=&quot;/dashboard/settings&quot;&gt;Settings&lt;/a&gt;
+        &lt;/nav&gt;
+      &lt;/aside&gt;
+      &lt;main className=&quot;content&quot;&gt;{children}&lt;/main&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Rendering Result:</strong></p>
+<pre class="hljs"><code><div>&lt;RootLayout&gt;
+  &lt;DashboardLayout&gt;
+    &lt;DashboardPage /&gt;
+  &lt;/DashboardLayout&gt;
+&lt;/RootLayout&gt;
+</div></code></pre>
+<h3 id="templates">Templates</h3>
+<p>Templates are similar to layouts but <strong>re-render on every navigation</strong>. Use when you need:</p>
+<ul>
+<li>Fresh state on each navigation</li>
+<li>useEffect to run on each navigation</li>
+<li>Animation on enter/exit</li>
+</ul>
+<p><strong>Code: <code>app/template.tsx</code></strong></p>
+<pre class="hljs"><code><div>'use client';
+
+import { motion } from 'framer-motion';
+
+export default function Template({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    &gt;
+      {children}
+    &lt;/motion.div&gt;
+  );
+}
+</div></code></pre>
+<h3 id="layout-vs-template-comparison">Layout vs Template Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Layout</th>
+<th>Template</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Re-renders on navigation</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Preserves state</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Effects re-run</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Use case</td>
+<td>Persistent UI</td>
+<td>Animations, analytics</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="6-loading-ui-and-streaming">6. Loading UI and Streaming</h2>
+<h3 id="instant-loading-states">Instant Loading States</h3>
+<p>The <code>loading.tsx</code> file creates an instant loading UI using React Suspense.</p>
+<p><strong>Folder Structure:</strong></p>
+<pre class="hljs"><code><div>app/
+└── products/
+    ├── loading.tsx        # Shown while page.tsx loads
+    └── page.tsx           # Async Server Component
+</div></code></pre>
+<p><strong>Code: <code>app/products/loading.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function ProductsLoading() {
+  return (
+    &lt;div className=&quot;loading-container&quot;&gt;
+      &lt;div className=&quot;spinner&quot; /&gt;
+      &lt;p&gt;Loading products...&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Code: <code>app/products/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>// This async component triggers the loading state
+export default async function ProductsPage() {
+  // Simulate slow data fetch
+  const products = await fetch('https://api.example.com/products', {
+    cache: 'no-store'
+  }).then(res =&gt; res.json());
+  
+  return (
+    &lt;ul&gt;
+      {products.map((product: any) =&gt; (
+        &lt;li key={product.id}&gt;{product.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</div></code></pre>
+<h3 id="how-it-works-under-the-hood">How It Works (Under the Hood)</h3>
+<p>Next.js automatically wraps <code>page.tsx</code> in a Suspense boundary:</p>
+<pre class="hljs"><code><div>// What Next.js does internally:
+&lt;Suspense fallback={&lt;Loading /&gt;}&gt;
+  &lt;Page /&gt;
+&lt;/Suspense&gt;
+</div></code></pre>
+<h3 id="streaming-with-suspense">Streaming with Suspense</h3>
+<p>You can also use Suspense directly for more granular loading states:</p>
+<pre class="hljs"><code><div>import { Suspense } from 'react';
+
+export default function DashboardPage() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Dashboard&lt;/h1&gt;
+      
+      {/* This loads instantly */}
+      &lt;WelcomeMessage /&gt;
+      
+      {/* This streams in when ready */}
+      &lt;Suspense fallback={&lt;StatsSkeleton /&gt;}&gt;
+        &lt;Stats /&gt;
+      &lt;/Suspense&gt;
+      
+      {/* This also streams independently */}
+      &lt;Suspense fallback={&lt;ChartSkeleton /&gt;}&gt;
+        &lt;RevenueChart /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}
+
+async function Stats() {
+  const stats = await fetchStats(); // Slow API
+  return &lt;StatsCards data={stats} /&gt;;
+}
+
+async function RevenueChart() {
+  const data = await fetchRevenueData(); // Another slow API
+  return &lt;Chart data={data} /&gt;;
+}
+</div></code></pre>
+<h3 id="skeleton-loading-pattern">Skeleton Loading Pattern</h3>
+<pre class="hljs"><code><div>// app/products/loading.tsx
+export default function ProductsLoading() {
+  return (
+    &lt;div className=&quot;products-grid&quot;&gt;
+      {Array.from({ length: 6 }).map((_, i) =&gt; (
+        &lt;div key={i} className=&quot;skeleton-card&quot;&gt;
+          &lt;div className=&quot;skeleton skeleton-image&quot; /&gt;
+          &lt;div className=&quot;skeleton skeleton-title&quot; /&gt;
+          &lt;div className=&quot;skeleton skeleton-price&quot; /&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<p><strong>CSS for Skeletons:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-selector-class">.skeleton</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(
+    <span class="hljs-number">90deg</span>,
+    #e0e0e0 <span class="hljs-number">25%</span>,
+    #f0f0f0 <span class="hljs-number">50%</span>,
+    #e0e0e0 <span class="hljs-number">75%</span>
+  );
+  <span class="hljs-attribute">background-size</span>: <span class="hljs-number">200%</span> <span class="hljs-number">100%</span>;
+  <span class="hljs-attribute">animation</span>: shimmer <span class="hljs-number">1.5s</span> infinite;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+}
+
+<span class="hljs-keyword">@keyframes</span> shimmer {
+  0% { <span class="hljs-attribute">background-position</span>: <span class="hljs-number">200%</span> <span class="hljs-number">0</span>; }
+  100% { <span class="hljs-attribute">background-position</span>: -<span class="hljs-number">200%</span> <span class="hljs-number">0</span>; }
+}
+
+<span class="hljs-selector-class">.skeleton-image</span> { <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; }
+<span class="hljs-selector-class">.skeleton-title</span> { <span class="hljs-attribute">height</span>: <span class="hljs-number">24px</span>; <span class="hljs-attribute">width</span>: <span class="hljs-number">80%</span>; <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">12px</span>; }
+<span class="hljs-selector-class">.skeleton-price</span> { <span class="hljs-attribute">height</span>: <span class="hljs-number">20px</span>; <span class="hljs-attribute">width</span>: <span class="hljs-number">40%</span>; <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">8px</span>; }
+</div></code></pre>
+<hr>
+<h2 id="7-error-handling">7. Error Handling</h2>
+<h3 id="error-boundaries-with-errortsx">Error Boundaries with <code>error.tsx</code></h3>
+<p>The <code>error.tsx</code> file creates a React Error Boundary for a route segment.</p>
+<p><strong>Important:</strong> <code>error.tsx</code> must be a Client Component.</p>
+<p><strong>Folder Structure:</strong></p>
+<pre class="hljs"><code><div>app/
+└── products/
+    ├── error.tsx          # Catches errors in this segment
+    ├── loading.tsx
+    └── page.tsx
+</div></code></pre>
+<p><strong>Code: <code>app/products/error.tsx</code></strong></p>
+<pre class="hljs"><code><div>'use client'; // Required!
+
+import { useEffect } from 'react';
+
+interface ErrorProps {
+  error: Error &amp; { digest?: string };
+  reset: () =&gt; void;
+}
+
+export default function ProductsError({ error, reset }: ErrorProps) {
+  useEffect(() =&gt; {
+    // Log error to an error reporting service
+    console.error('Products error:', error);
+  }, [error]);
+
+  return (
+    &lt;div className=&quot;error-container&quot;&gt;
+      &lt;h2&gt;Something went wrong!&lt;/h2&gt;
+      &lt;p&gt;{error.message}&lt;/p&gt;
+      
+      {/* Reset button re-renders the segment */}
+      &lt;button onClick={reset}&gt;
+        Try again
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<h3 id="error-boundary-hierarchy">Error Boundary Hierarchy</h3>
+<p>Errors bubble up to the nearest error boundary:</p>
+<pre class="hljs"><code><div>app/
+├── error.tsx              # Catches errors from entire app
+├── layout.tsx
+└── dashboard/
+    ├── error.tsx          # Catches errors from dashboard/*
+    ├── page.tsx
+    └── settings/
+        ├── error.tsx      # Catches errors from settings only
+        └── page.tsx
+</div></code></pre>
+<h3 id="handling-errors-in-layouts">Handling Errors in Layouts</h3>
+<p><code>error.tsx</code> <strong>cannot catch errors in <code>layout.tsx</code></strong> of the same segment (because error boundary wraps children, not siblings).</p>
+<p><strong>Solution:</strong> Use <code>global-error.tsx</code> at root level:</p>
+<pre class="hljs"><code><div>// app/global-error.tsx
+'use client';
+
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error &amp; { digest?: string };
+  reset: () =&gt; void;
+}) {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2&gt;Something went wrong!&lt;/h2&gt;
+        &lt;button onClick={reset}&gt;Try again&lt;/button&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</div></code></pre>
+<h3 id="error-recovery-pattern">Error Recovery Pattern</h3>
+<pre class="hljs"><code><div>'use client';
+
+import { useState } from 'react';
+
+export default function ProductsError({ 
+  error, 
+  reset 
+}: { 
+  error: Error; 
+  reset: () =&gt; void 
+}) {
+  const [isRetrying, setIsRetrying] = useState(false);
+
+  const handleRetry = async () =&gt; {
+    setIsRetrying(true);
+    
+    // Optional: Clear any cached data
+    // await clearCache();
+    
+    // Reset the error boundary
+    reset();
+  };
+
+  return (
+    &lt;div className=&quot;error-container&quot;&gt;
+      &lt;div className=&quot;error-icon&quot;&gt;⚠️&lt;/div&gt;
+      &lt;h2&gt;Failed to load products&lt;/h2&gt;
+      &lt;p className=&quot;error-message&quot;&gt;
+        {error.message || 'An unexpected error occurred'}
+      &lt;/p&gt;
+      
+      &lt;div className=&quot;error-actions&quot;&gt;
+        &lt;button 
+          onClick={handleRetry} 
+          disabled={isRetrying}
+          className=&quot;btn btn-primary&quot;
+        &gt;
+          {isRetrying ? 'Retrying...' : 'Try Again'}
+        &lt;/button&gt;
+        
+        &lt;a href=&quot;/&quot; className=&quot;btn btn-secondary&quot;&gt;
+          Go Home
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="8-not-found-pages">8. Not Found Pages</h2>
+<h3 id="the-not-foundtsx-file">The <code>not-found.tsx</code> File</h3>
+<p>Handles 404 errors for a route segment.</p>
+<p><strong>Code: <code>app/not-found.tsx</code></strong></p>
+<pre class="hljs"><code><div>import Link from 'next/link';
+
+export default function NotFound() {
+  return (
+    &lt;div className=&quot;not-found&quot;&gt;
+      &lt;h1&gt;404&lt;/h1&gt;
+      &lt;h2&gt;Page Not Found&lt;/h2&gt;
+      &lt;p&gt;The page you're looking for doesn't exist.&lt;/p&gt;
+      &lt;Link href=&quot;/&quot;&gt;Go Home&lt;/Link&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<h3 id="triggering-not-found-programmatically">Triggering Not Found Programmatically</h3>
+<p>Use the <code>notFound()</code> function to trigger a 404:</p>
+<pre class="hljs"><code><div>import { notFound } from 'next/navigation';
+
+interface ProductPageProps {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { id } = await params;
+  const product = await getProduct(id);
+  
+  // Trigger 404 if product doesn't exist
+  if (!product) {
+    notFound();
+  }
+  
+  return &lt;ProductDetail product={product} /&gt;;
+}
+</div></code></pre>
+<h3 id="segment-specific-not-found-pages">Segment-Specific Not Found Pages</h3>
+<pre class="hljs"><code><div>app/
+├── not-found.tsx          # Global 404
+└── products/
+    ├── not-found.tsx      # Products-specific 404
+    └── [id]/
+        └── page.tsx       # Can call notFound()
+</div></code></pre>
+<p><strong>Code: <code>app/products/not-found.tsx</code></strong></p>
+<pre class="hljs"><code><div>import Link from 'next/link';
+
+export default function ProductNotFound() {
+  return (
+    &lt;div className=&quot;not-found&quot;&gt;
+      &lt;h2&gt;Product Not Found&lt;/h2&gt;
+      &lt;p&gt;We couldn't find the product you're looking for.&lt;/p&gt;
+      &lt;Link href=&quot;/products&quot;&gt;Browse All Products&lt;/Link&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="9-parallel-routes">9. Parallel Routes</h2>
+<h3 id="what-are-parallel-routes">What are Parallel Routes?</h3>
+<p>Parallel routes allow you to <strong>render multiple pages simultaneously</strong> in the same layout. They're defined using <strong>slots</strong> with the <code>@</code> prefix.</p>
+<h3 id="use-cases">Use Cases</h3>
+<ol>
+<li><strong>Dashboards</strong> with independent sections</li>
+<li><strong>Modals</strong> that overlay content</li>
+<li><strong>Split views</strong> (e.g., list + detail)</li>
+<li><strong>Conditional rendering</strong> based on auth state</li>
+</ol>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>app/
+├── layout.tsx             # Receives slots as props
+├── page.tsx               # Default children
+├── @analytics/            # Slot: analytics
+│   └── page.tsx
+└── @team/                 # Slot: team
+    └── page.tsx
+</div></code></pre>
+<h3 id="example-1-dashboard-with-multiple-sections">Example 1: Dashboard with Multiple Sections</h3>
+<p><strong>Folder Structure:</strong></p>
+<pre class="hljs"><code><div>app/
+└── dashboard/
+    ├── layout.tsx
+    ├── page.tsx           # Main content
+    ├── @stats/
+    │   └── page.tsx       # Stats panel
+    └── @activity/
+        └── page.tsx       # Activity feed
+</div></code></pre>
+<p><strong>Code: <code>app/dashboard/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>interface DashboardLayoutProps {
+  children: React.ReactNode;  // page.tsx
+  stats: React.ReactNode;     // @stats/page.tsx
+  activity: React.ReactNode;  // @activity/page.tsx
+}
+
+export default function DashboardLayout({
+  children,
+  stats,
+  activity,
+}: DashboardLayoutProps) {
+  return (
+    &lt;div className=&quot;dashboard-grid&quot;&gt;
+      {/* Main content area */}
+      &lt;main className=&quot;main-content&quot;&gt;
+        {children}
+      &lt;/main&gt;
+      
+      {/* Sidebar with parallel routes */}
+      &lt;aside className=&quot;sidebar&quot;&gt;
+        &lt;section className=&quot;stats-section&quot;&gt;
+          {stats}
+        &lt;/section&gt;
+        &lt;section className=&quot;activity-section&quot;&gt;
+          {activity}
+        &lt;/section&gt;
+      &lt;/aside&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Code: <code>app/dashboard/@stats/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default async function StatsPanel() {
+  const stats = await fetchStats();
+  
+  return (
+    &lt;div className=&quot;stats-panel&quot;&gt;
+      &lt;h3&gt;Statistics&lt;/h3&gt;
+      &lt;div className=&quot;stat-card&quot;&gt;
+        &lt;span&gt;Total Users&lt;/span&gt;
+        &lt;strong&gt;{stats.users}&lt;/strong&gt;
+      &lt;/div&gt;
+      &lt;div className=&quot;stat-card&quot;&gt;
+        &lt;span&gt;Revenue&lt;/span&gt;
+        &lt;strong&gt;${stats.revenue}&lt;/strong&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<h3 id="the-defaulttsx-file-critical">The <code>default.tsx</code> File (Critical!)</h3>
+<p>When using parallel routes, you <strong>must</strong> provide a <code>default.tsx</code> for slots that might not have a matching route during navigation.</p>
+<p><strong>Why?</strong> During soft navigation, Next.js keeps the current slot content. But on hard navigation (refresh), it needs a fallback.</p>
+<p><strong>Code: <code>app/dashboard/@stats/default.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function StatsDefault() {
+  // Return null to render nothing, or a placeholder
+  return null;
+}
+</div></code></pre>
+<h3 id="example-2-conditional-slots">Example 2: Conditional Slots</h3>
+<p>Parallel routes can render different content based on conditions:</p>
+<pre class="hljs"><code><div>app/
+└── dashboard/
+    ├── layout.tsx
+    ├── @auth/
+    │   ├── default.tsx
+    │   └── page.tsx
+    └── @guest/
+        ├── default.tsx
+        └── page.tsx
+</div></code></pre>
+<p><strong>Code: <code>app/dashboard/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>import { auth } from '@/lib/auth';
+
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+  auth: React.ReactNode;
+  guest: React.ReactNode;
+}
+
+export default async function DashboardLayout({
+  children,
+  auth: authSlot,
+  guest: guestSlot,
+}: DashboardLayoutProps) {
+  const session = await auth();
+  
+  return (
+    &lt;div&gt;
+      {session ? authSlot : guestSlot}
+      {children}
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="10-intercepting-routes">10. Intercepting Routes</h2>
+<h3 id="what-are-intercepting-routes">What are Intercepting Routes?</h3>
+<p>Intercepting routes let you <strong>load a route within the current layout</strong> while displaying a different URL. This is perfect for <strong>modals</strong>.</p>
+<h3 id="the-convention">The Convention</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Matches</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(.)</code></td>
+<td>Same level</td>
+<td>Modal for sibling route</td>
+</tr>
+<tr>
+<td><code>(..)</code></td>
+<td>One level up</td>
+<td>Modal for parent's sibling</td>
+</tr>
+<tr>
+<td><code>(..)(..)</code></td>
+<td>Two levels up</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>(...)</code></td>
+<td>From root</td>
+<td>Modal for any route</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-interception-works">How Interception Works</h3>
+<ol>
+<li><strong>Soft Navigation</strong> (clicking a Link): Interceptor catches → shows modal</li>
+<li><strong>Hard Navigation</strong> (refresh, direct URL): Original route renders → full page</li>
+</ol>
+<h3 id="visual-explanation">Visual Explanation</h3>
+<pre class="hljs"><code><div>SOFT NAVIGATION (Link click):
+/products → click product → /products/1
+           ↓
+    Interceptor catches!
+           ↓
+    Modal shows over /products
+    URL: /products/1
+
+HARD NAVIGATION (refresh/direct):
+Direct to /products/1
+           ↓
+    No interception
+           ↓
+    Full page renders
+    URL: /products/1
+</div></code></pre>
+<h3 id="example-photo-gallery-modal">Example: Photo Gallery Modal</h3>
+<p><strong>Folder Structure:</strong></p>
+<pre class="hljs"><code><div>app/
+├── layout.tsx
+├── @modal/                       # Parallel route slot
+│   ├── default.tsx               # Returns null
+│   └── (.)photos/[id]/           # Intercepts /photos/[id]
+│       └── page.tsx              # Modal content
+└── photos/
+    ├── page.tsx                  # Photo grid
+    └── [id]/
+        └── page.tsx              # Full photo page
+</div></code></pre>
+<p><strong>Code: <code>app/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>interface RootLayoutProps {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}
+
+export default function RootLayout({ children, modal }: RootLayoutProps) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;
+        {children}
+        {modal}  {/* Modal renders on top */}
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Code: <code>app/@modal/default.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function ModalDefault() {
+  return null; // No modal by default
+}
+</div></code></pre>
+<p><strong>Code: <code>app/@modal/(.)photos/[id]/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>import Modal from '@/components/Modal';
+import { getPhoto } from '@/lib/photos';
+
+interface ModalPhotoProps {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+export default async function ModalPhoto({ params }: ModalPhotoProps) {
+  const { id } = await params;
+  const photo = await getPhoto(id);
+  
+  return (
+    &lt;Modal&gt;
+      &lt;img src={photo.url} alt={photo.title} /&gt;
+      &lt;h2&gt;{photo.title}&lt;/h2&gt;
+    &lt;/Modal&gt;
+  );
+}
+</div></code></pre>
+<p><strong>Code: <code>app/photos/[id]/page.tsx</code></strong> (Full page version)</p>
+<pre class="hljs"><code><div>import { getPhoto } from '@/lib/photos';
+
+interface PhotoPageProps {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+export default async function PhotoPage({ params }: PhotoPageProps) {
+  const { id } = await params;
+  const photo = await getPhoto(id);
+  
+  return (
+    &lt;main className=&quot;photo-page&quot;&gt;
+      &lt;img src={photo.url} alt={photo.title} /&gt;
+      &lt;h1&gt;{photo.title}&lt;/h1&gt;
+      &lt;p&gt;{photo.description}&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<h3 id="interceptor-pattern-reference">Interceptor Pattern Reference</h3>
+<p><strong>Same level <code>(.)</code>:</strong></p>
+<pre class="hljs"><code><div>app/
+├── @modal/(.)products/[id]/page.tsx  ← Interceptor
+└── products/
+    ├── page.tsx                       ← Source page
+    └── [id]/page.tsx                  ← Target route
+</div></code></pre>
+<p><strong>One level up <code>(..)</code>:</strong></p>
+<pre class="hljs"><code><div>app/
+└── products/
+    ├── @modal/(..)products/[id]/page.tsx  ← Interceptor
+    ├── page.tsx                            ← Source
+    └── [id]/page.tsx                       ← Target
+</div></code></pre>
+<hr>
+<h2 id="11-case-study-product-quick-view-modal">11. Case Study: Product Quick View Modal</h2>
+<p>Let's build a complete <strong>product quick view modal</strong> using parallel and intercepting routes.</p>
+<h3 id="requirements">Requirements</h3>
+<ol>
+<li><code>/products</code> - Grid of product cards</li>
+<li><code>/products/[id]</code> - Full product page (direct access)</li>
+<li>Click product card → Modal overlay (intercepted)</li>
+<li>Refresh while modal open → Full page</li>
+<li>Loading, error, and 404 states</li>
+</ol>
+<h3 id="final-folder-structure">Final Folder Structure</h3>
+<pre class="hljs"><code><div>src/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx              # Root layout with @modal slot
+│   ├── page.tsx                # Home page
+│   ├── default.tsx             # Root default
+│   ├── not-found.tsx           # Global 404
+│   ├── @modal/
+│   │   ├── default.tsx         # Modal default (null)
+│   │   └── (.)products/
+│   │       └── [id]/
+│   │           └── page.tsx    # Modal content
+│   └── products/
+│       ├── layout.tsx
+│       ├── page.tsx            # Product grid
+│       ├── loading.tsx         # Skeleton loading
+│       ├── error.tsx           # Error boundary
+│       └── [id]/
+│           └── page.tsx        # Full product page
+├── components/
+│   └── Modal.tsx               # Reusable modal
+└── lib/
+    └── products.ts             # Mock data
+</div></code></pre>
+<h3 id="step-1-create-mock-data">Step 1: Create Mock Data</h3>
+<p><strong>File: <code>src/lib/products.ts</code></strong></p>
+<pre class="hljs"><code><div>export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  imageUrl: string;
+  inStock: boolean;
+  rating: number;
+}
+
+export const products: Product[] = [
+  {
+    id: &quot;1&quot;,
+    name: &quot;Wireless Headphones Pro&quot;,
+    description: &quot;Premium noise-canceling wireless headphones with 40-hour battery life.&quot;,
+    price: 299.99,
+    category: &quot;Electronics&quot;,
+    imageUrl: &quot;https://picsum.photos/seed/headphones/400/300&quot;,
+    inStock: true,
+    rating: 4.8,
+  },
+  {
+    id: &quot;2&quot;,
+    name: &quot;Mechanical Keyboard RGB&quot;,
+    description: &quot;Cherry MX switches, per-key RGB lighting, aircraft-grade aluminum frame.&quot;,
+    price: 149.99,
+    category: &quot;Electronics&quot;,
+    imageUrl: &quot;https://picsum.photos/seed/keyboard/400/300&quot;,
+    inStock: true,
+    rating: 4.6,
+  },
+  // ... more products
+];
+
+// Simulate API calls with delay
+export async function getProducts(): Promise&lt;Product[]&gt; {
+  await new Promise((resolve) =&gt; setTimeout(resolve, 500));
+  return products;
+}
+
+export async function getProductById(id: string): Promise&lt;Product | null&gt; {
+  await new Promise((resolve) =&gt; setTimeout(resolve, 300));
+  return products.find((p) =&gt; p.id === id) ?? null;
+}
+</div></code></pre>
+<h3 id="step-2-root-layout-with-modal-slot">Step 2: Root Layout with Modal Slot</h3>
+<p><strong>File: <code>src/app/layout.tsx</code></strong></p>
+<pre class="hljs"><code><div>import type { Metadata } from &quot;next&quot;;
+import Link from &quot;next/link&quot;;
+import &quot;./globals.css&quot;;
+
+export const metadata: Metadata = {
+  title: &quot;Product Store&quot;,
+  description: &quot;Demo of Next.js routing patterns&quot;,
+};
+
+// Layout receives @modal slot as a prop
+interface RootLayoutProps {
+  children: React.ReactNode;
+  modal: React.ReactNode;  // ← This comes from @modal folder
+}
+
+export default function RootLayout({ children, modal }: RootLayoutProps) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;
+        {/* Navigation */}
+        &lt;nav className=&quot;nav&quot;&gt;
+          &lt;div className=&quot;container nav-content&quot;&gt;
+            &lt;Link href=&quot;/&quot; className=&quot;nav-brand&quot;&gt;
+              🛒 Store
+            &lt;/Link&gt;
+            &lt;Link href=&quot;/products&quot; className=&quot;nav-link&quot;&gt;
+              Products
+            &lt;/Link&gt;
+          &lt;/div&gt;
+        &lt;/nav&gt;
+
+        {/* Main content */}
+        {children}
+
+        {/* Modal slot - renders parallel to children */}
+        {modal}
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</div></code></pre>
+<h3 id="step-3-modal-default-critical">Step 3: Modal Default (Critical!)</h3>
+<p><strong>File: <code>src/app/@modal/default.tsx</code></strong></p>
+<pre class="hljs"><code><div>// This file is REQUIRED for parallel routes!
+// Without it, you'll get 404 errors on hard navigation.
+
+export default function ModalDefault() {
+  // Return null = no modal shown
+  return null;
+}
+</div></code></pre>
+<h3 id="step-4-products-grid-page">Step 4: Products Grid Page</h3>
+<p><strong>File: <code>src/app/products/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>import Link from &quot;next/link&quot;;
+import { getProducts } from &quot;@/lib/products&quot;;
+
+export default async function ProductsPage() {
+  const products = await getProducts();
+
+  return (
+    &lt;main&gt;
+      &lt;header className=&quot;page-header&quot;&gt;
+        &lt;div className=&quot;container&quot;&gt;
+          &lt;h1&gt;Products&lt;/h1&gt;
+          &lt;p&gt;Click any product for Quick View&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/header&gt;
+
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;div className=&quot;products-grid&quot;&gt;
+          {products.map((product) =&gt; (
+            &lt;Link
+              key={product.id}
+              href={`/products/${product.id}`}  // ← This will be intercepted!
+              className=&quot;product-card&quot;
+            &gt;
+              &lt;img src={product.imageUrl} alt={product.name} /&gt;
+              &lt;div className=&quot;product-info&quot;&gt;
+                &lt;span className=&quot;product-category&quot;&gt;{product.category}&lt;/span&gt;
+                &lt;h2&gt;{product.name}&lt;/h2&gt;
+                &lt;div className=&quot;product-price&quot;&gt;${product.price}&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<h3 id="step-5-products-loading-state">Step 5: Products Loading State</h3>
+<p><strong>File: <code>src/app/products/loading.tsx</code></strong></p>
+<pre class="hljs"><code><div>export default function ProductsLoading() {
+  return (
+    &lt;main&gt;
+      &lt;header className=&quot;page-header&quot;&gt;
+        &lt;div className=&quot;container&quot;&gt;
+          &lt;h1&gt;Products&lt;/h1&gt;
+          &lt;p&gt;Loading...&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/header&gt;
+
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;div className=&quot;products-grid&quot;&gt;
+          {Array.from({ length: 6 }).map((_, i) =&gt; (
+            &lt;div key={i} className=&quot;product-card skeleton-card&quot;&gt;
+              &lt;div className=&quot;skeleton&quot; style={{ height: 200 }} /&gt;
+              &lt;div className=&quot;product-info&quot;&gt;
+                &lt;div className=&quot;skeleton&quot; style={{ height: 12, width: '30%' }} /&gt;
+                &lt;div className=&quot;skeleton&quot; style={{ height: 20, width: '80%' }} /&gt;
+                &lt;div className=&quot;skeleton&quot; style={{ height: 24, width: '40%' }} /&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  );
+}
+</div></code></pre>
+<h3 id="step-6-products-error-boundary">Step 6: Products Error Boundary</h3>
+<p><strong>File: <code>src/app/products/error.tsx</code></strong></p>
+<pre class="hljs"><code><div>'use client';
+
+import { useEffect } from 'react';
+
+interface ProductsErrorProps {
+  error: Error &amp; { digest?: string };
+  reset: () =&gt; void;
+}
+
+export default function ProductsError({ error, reset }: ProductsErrorProps) {
+  useEffect(() =&gt; {
+    console.error('Products error:', error);
+  }, [error]);
+
+  return (
+    &lt;div className=&quot;error-container&quot;&gt;
+      &lt;div className=&quot;error-icon&quot;&gt;⚠️&lt;/div&gt;
+      &lt;h2&gt;Failed to load products&lt;/h2&gt;
+      &lt;p&gt;{error.message}&lt;/p&gt;
+      &lt;button onClick={reset} className=&quot;btn btn-primary&quot;&gt;
+        Try Again
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<h3 id="step-7-full-product-page">Step 7: Full Product Page</h3>
+<p><strong>File: <code>src/app/products/[id]/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>import Link from &quot;next/link&quot;;
+import { notFound } from &quot;next/navigation&quot;;
+import { getProductById, products } from &quot;@/lib/products&quot;;
+
+interface ProductPageProps {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { id } = await params;
+  const product = await getProductById(id);
+
+  if (!product) {
+    notFound();  // Triggers not-found.tsx
+  }
+
+  return (
+    &lt;main className=&quot;container&quot;&gt;
+      &lt;Link href=&quot;/products&quot; className=&quot;back-link&quot;&gt;
+        ← Back to Products
+      &lt;/Link&gt;
+
+      &lt;div className=&quot;product-detail&quot;&gt;
+        &lt;img src={product.imageUrl} alt={product.name} /&gt;
+        
+        &lt;div className=&quot;product-detail-info&quot;&gt;
+          &lt;span className=&quot;product-category&quot;&gt;{product.category}&lt;/span&gt;
+          &lt;h1&gt;{product.name}&lt;/h1&gt;
+          &lt;div className=&quot;product-price&quot;&gt;${product.price}&lt;/div&gt;
+          &lt;p&gt;{product.description}&lt;/p&gt;
+          
+          &lt;button className=&quot;btn btn-primary&quot;&gt;
+            Add to Cart
+          &lt;/button&gt;
+          
+          {/* Info box explaining routing */}
+          &lt;div className=&quot;info-box&quot;&gt;
+            💡 You're seeing the &lt;strong&gt;full page&lt;/strong&gt; because you 
+            navigated directly or refreshed. Go to{' '}
+            &lt;Link href=&quot;/products&quot;&gt;/products&lt;/Link&gt; and click a card 
+            to see the modal.
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  );
+}
+
+// Pre-render all product pages at build time
+export function generateStaticParams() {
+  return products.map((product) =&gt; ({
+    id: product.id,
+  }));
+}
+</div></code></pre>
+<h3 id="step-8-modal-component-client-component">Step 8: Modal Component (Client Component)</h3>
+<p><strong>File: <code>src/components/Modal.tsx</code></strong></p>
+<pre class="hljs"><code><div>'use client';
+
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
+
+interface ModalProps {
+  children: React.ReactNode;
+  title?: string;
+}
+
+export default function Modal({ children, title }: ModalProps) {
+  const router = useRouter();
+
+  // Close modal by going back in history
+  const handleClose = useCallback(() =&gt; {
+    router.back();
+  }, [router]);
+
+  // Close on Escape key
+  useEffect(() =&gt; {
+    const handleKeyDown = (e: KeyboardEvent) =&gt; {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () =&gt; document.removeEventListener('keydown', handleKeyDown);
+  }, [handleClose]);
+
+  // Close when clicking overlay
+  const handleOverlayClick = (e: React.MouseEvent) =&gt; {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  };
+
+  return (
+    &lt;div className=&quot;modal-overlay&quot; onClick={handleOverlayClick}&gt;
+      &lt;div className=&quot;modal-content&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot;&gt;
+        &lt;div className=&quot;modal-header&quot;&gt;
+          &lt;h2&gt;{title || 'Quick View'}&lt;/h2&gt;
+          &lt;button onClick={handleClose} className=&quot;modal-close&quot;&gt;
+            ✕
+          &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;modal-body&quot;&gt;
+          {children}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</div></code></pre>
+<h3 id="step-9-intercepting-route-the-magic">Step 9: Intercepting Route (The Magic!)</h3>
+<p><strong>File: <code>src/app/@modal/(.)products/[id]/page.tsx</code></strong></p>
+<pre class="hljs"><code><div>// INTERCEPTING ROUTE
+// 
+// (.) = intercepts routes at the SAME level
+// This file intercepts /products/[id] when navigating from /products
+//
+// How it works:
+// 1. User is on /products
+// 2. User clicks Link to /products/1
+// 3. Next.js sees this interceptor exists
+// 4. Instead of products/[id]/page.tsx, THIS renders
+// 5. URL changes to /products/1
+// 6. But /products page stays visible behind modal!
+
+import Link from &quot;next/link&quot;;
+import { notFound } from &quot;next/navigation&quot;;
+import Modal from &quot;@/components/Modal&quot;;
+import { getProductById } from &quot;@/lib/products&quot;;
+
+interface ModalProductPageProps {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+export default async function ModalProductPage({ params }: ModalProductPageProps) {
+  const { id } = await params;
+  const product = await getProductById(id);
+
+  if (!product) {
+    notFound();
+  }
+
+  return (
+    &lt;Modal title=&quot;Quick View&quot;&gt;
+      &lt;img src={product.imageUrl} alt={product.name} className=&quot;modal-image&quot; /&gt;
+      
+      &lt;span className=&quot;product-category&quot;&gt;{product.category}&lt;/span&gt;
+      &lt;h3&gt;{product.name}&lt;/h3&gt;
+      &lt;div className=&quot;product-price&quot;&gt;${product.price}&lt;/div&gt;
+      &lt;p&gt;{product.description}&lt;/p&gt;
+
+      &lt;div className=&quot;modal-actions&quot;&gt;
+        &lt;button className=&quot;btn btn-primary&quot;&gt;
+          Add to Cart
+        &lt;/button&gt;
+        &lt;Link href={`/products/${product.id}`} className=&quot;btn btn-outline&quot;&gt;
+          View Full Page →
+        &lt;/Link&gt;
+      &lt;/div&gt;
+
+      &lt;div className=&quot;info-box&quot;&gt;
+        💡 This is an &lt;strong&gt;intercepted route&lt;/strong&gt;. 
+        URL is &lt;code&gt;/products/{id}&lt;/code&gt; but you see a modal.
+        Refresh to see the full page!
+      &lt;/div&gt;
+    &lt;/Modal&gt;
+  );
+}
+</div></code></pre>
+<h3 id="step-10-test-the-implementation">Step 10: Test the Implementation</h3>
+<ol>
+<li><strong>Start the dev server:</strong> <code>npm run dev</code></li>
+<li><strong>Go to</strong> <code>http://localhost:3000/products</code></li>
+<li><strong>Click any product card</strong> → Modal opens, URL changes to <code>/products/1</code></li>
+<li><strong>Press Escape</strong> or click outside → Modal closes, back to <code>/products</code></li>
+<li><strong>Refresh while modal is open</strong> → Full page renders</li>
+<li><strong>Navigate directly to</strong> <code>/products/1</code> → Full page renders</li>
+</ol>
+<h3 id="how-it-all-works-together">How It All Works Together</h3>
+<pre class="hljs"><code><div>User clicks product card on /products
+         ↓
+Link navigates to /products/1 (soft navigation)
+         ↓
+Next.js checks for interceptors
+         ↓
+Found: @modal/(.)products/[id]/page.tsx
+         ↓
+Renders interceptor in @modal slot
+         ↓
+Original /products page stays in {children}
+         ↓
+RESULT: Modal overlay + products grid visible
+         URL: /products/1
+
+---
+
+User refreshes page (or navigates directly to /products/1)
+         ↓
+Hard navigation - no interception
+         ↓
+products/[id]/page.tsx renders
+         ↓
+RESULT: Full product page
+         URL: /products/1
+</div></code></pre>
+<hr>
+<h2 id="12-navigation-and-linking">12. Navigation and Linking</h2>
+<h3 id="the-link-component">The <code>&lt;Link&gt;</code> Component</h3>
+<p>Next.js <code>&lt;Link&gt;</code> enables <strong>client-side navigation</strong> with prefetching.</p>
+<pre class="hljs"><code><div>import Link from 'next/link';
+
+export default function Navigation() {
+  return (
+    &lt;nav&gt;
+      {/* Basic link */}
+      &lt;Link href=&quot;/about&quot;&gt;About&lt;/Link&gt;
+      
+      {/* Dynamic route */}
+      &lt;Link href={`/products/${product.id}`}&gt;
+        {product.name}
+      &lt;/Link&gt;
+      
+      {/* With query params */}
+      &lt;Link href=&quot;/search?q=shoes&quot;&gt;
+        Search Shoes
+      &lt;/Link&gt;
+      
+      {/* Replace history (no back) */}
+      &lt;Link href=&quot;/login&quot; replace&gt;
+        Login
+      &lt;/Link&gt;
+      
+      {/* Disable prefetch */}
+      &lt;Link href=&quot;/heavy-page&quot; prefetch={false}&gt;
+        Heavy Page
+      &lt;/Link&gt;
+      
+      {/* Scroll to top disabled */}
+      &lt;Link href=&quot;/same-page#section&quot; scroll={false}&gt;
+        Jump to Section
+      &lt;/Link&gt;
+    &lt;/nav&gt;
+  );
+}
+</div></code></pre>
+<h3 id="the-userouter-hook">The <code>useRouter</code> Hook</h3>
+<p>For programmatic navigation in Client Components:</p>
+<pre class="hljs"><code><div>'use client';
+
+import { useRouter } from 'next/navigation';
+
+export default function LoginForm() {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) =&gt; {
+    e.preventDefault();
+    
+    const success = await login(/* ... */);
+    
+    if (success) {
+      // Navigate to dashboard
+      router.push('/dashboard');
+      
+      // Or replace current history entry
+      router.replace('/dashboard');
+      
+      // Or go back
+      router.back();
+      
+      // Or refresh current route
+      router.refresh();
+    }
+  };
+
+  return &lt;form onSubmit={handleSubmit}&gt;...&lt;/form&gt;;
+}
+</div></code></pre>
+<h3 id="the-redirect-function">The <code>redirect</code> Function</h3>
+<p>For server-side redirects:</p>
+<pre class="hljs"><code><div>import { redirect } from 'next/navigation';
+
+export default async function ProtectedPage() {
+  const session = await getSession();
+  
+  if (!session) {
+    redirect('/login');  // Server-side redirect
+  }
+  
+  return &lt;Dashboard /&gt;;
+}
+</div></code></pre>
+<h3 id="active-links">Active Links</h3>
+<p>Detect active route with <code>usePathname</code>:</p>
+<pre class="hljs"><code><div>'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+export default function NavLink({ 
+  href, 
+  children 
+}: { 
+  href: string; 
+  children: React.ReactNode 
+}) {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
+  return (
+    &lt;Link 
+      href={href}
+      className={isActive ? 'nav-link active' : 'nav-link'}
+    &gt;
+      {children}
+    &lt;/Link&gt;
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="13-route-handlers-api-routes">13. Route Handlers (API Routes)</h2>
+<h3 id="creating-api-endpoints">Creating API Endpoints</h3>
+<p>Route handlers are created using <code>route.ts</code> files.</p>
+<p><strong>File: <code>app/api/products/route.ts</code></strong></p>
+<pre class="hljs"><code><div>import { NextResponse } from 'next/server';
+import { products } from '@/lib/products';
+
+// GET /api/products
+export async function GET() {
+  return NextResponse.json(products);
+}
+
+// POST /api/products
+export async function POST(request: Request) {
+  const body = await request.json();
+  
+  const newProduct = {
+    id: String(products.length + 1),
+    ...body,
+  };
+  
+  products.push(newProduct);
+  
+  return NextResponse.json(newProduct, { status: 201 });
+}
+</div></code></pre>
+<h3 id="dynamic-route-handlers">Dynamic Route Handlers</h3>
+<p><strong>File: <code>app/api/products/[id]/route.ts</code></strong></p>
+<pre class="hljs"><code><div>import { NextResponse } from 'next/server';
+import { products } from '@/lib/products';
+
+interface RouteParams {
+  params: Promise&lt;{ id: string }&gt;;
+}
+
+// GET /api/products/[id]
+export async function GET(request: Request, { params }: RouteParams) {
+  const { id } = await params;
+  const product = products.find(p =&gt; p.id === id);
+  
+  if (!product) {
+    return NextResponse.json(
+      { error: 'Product not found' },
+      { status: 404 }
+    );
+  }
+  
+  return NextResponse.json(product);
+}
+
+// DELETE /api/products/[id]
+export async function DELETE(request: Request, { params }: RouteParams) {
+  const { id } = await params;
+  const index = products.findIndex(p =&gt; p.id === id);
+  
+  if (index === -1) {
+    return NextResponse.json(
+      { error: 'Product not found' },
+      { status: 404 }
+    );
+  }
+  
+  products.splice(index, 1);
+  
+  return NextResponse.json({ success: true });
+}
+</div></code></pre>
+<h3 id="supported-http-methods">Supported HTTP Methods</h3>
+<pre class="hljs"><code><div>export async function GET(request: Request) {}
+export async function POST(request: Request) {}
+export async function PUT(request: Request) {}
+export async function PATCH(request: Request) {}
+export async function DELETE(request: Request) {}
+export async function HEAD(request: Request) {}
+export async function OPTIONS(request: Request) {}
+</div></code></pre>
+<hr>
+<h2 id="14-middleware">14. Middleware</h2>
+<h3 id="what-is-middleware">What is Middleware?</h3>
+<p>Middleware runs <strong>before</strong> a request is completed. Use it for:</p>
+<ul>
+<li>Authentication</li>
+<li>Redirects</li>
+<li>Rewriting URLs</li>
+<li>Adding headers</li>
+</ul>
+<h3 id="creating-middleware">Creating Middleware</h3>
+<p><strong>File: <code>middleware.ts</code> (root level)</strong></p>
+<pre class="hljs"><code><div>import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  // Get the pathname
+  const { pathname } = request.nextUrl;
+  
+  // Check for auth token
+  const token = request.cookies.get('token');
+  
+  // Protect /dashboard routes
+  if (pathname.startsWith('/dashboard') &amp;&amp; !token) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+  
+  // Add custom header
+  const response = NextResponse.next();
+  response.headers.set('x-custom-header', 'my-value');
+  
+  return response;
+}
+
+// Configure which paths middleware runs on
+export const config = {
+  matcher: [
+    // Match all paths except static files
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
+};
+</div></code></pre>
+<h3 id="middleware-patterns">Middleware Patterns</h3>
+<p><strong>Pattern 1: Authentication</strong></p>
+<pre class="hljs"><code><div>export function middleware(request: NextRequest) {
+  const token = request.cookies.get('session');
+  
+  const protectedPaths = ['/dashboard', '/settings', '/profile'];
+  const isProtected = protectedPaths.some(path =&gt; 
+    request.nextUrl.pathname.startsWith(path)
+  );
+  
+  if (isProtected &amp;&amp; !token) {
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('from', request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+}
+</div></code></pre>
+<p><strong>Pattern 2: Geolocation Redirect</strong></p>
+<pre class="hljs"><code><div>export function middleware(request: NextRequest) {
+  const country = request.geo?.country || 'US';
+  
+  if (country === 'UK' &amp;&amp; !request.nextUrl.pathname.startsWith('/uk')) {
+    return NextResponse.redirect(new URL('/uk', request.url));
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="15-best-practices">15. Best Practices</h2>
+<h3 id="1-organize-by-feature">1. Organize by Feature</h3>
+<pre class="hljs"><code><div>app/
+├── (marketing)/
+│   ├── about/
+│   ├── blog/
+│   └── pricing/
+├── (app)/
+│   ├── dashboard/
+│   ├── settings/
+│   └── profile/
+└── (auth)/
+    ├── login/
+    └── register/
+</div></code></pre>
+<h3 id="2-colocate-related-files">2. Colocate Related Files</h3>
+<pre class="hljs"><code><div>app/
+└── products/
+    ├── page.tsx
+    ├── loading.tsx
+    ├── error.tsx
+    ├── actions.ts      # Server actions
+    ├── utils.ts        # Helper functions
+    └── components/     # Route-specific components
+        ├── ProductCard.tsx
+        └── ProductFilter.tsx
+</div></code></pre>
+<h3 id="3-use-loading-and-error-states">3. Use Loading and Error States</h3>
+<p>Always provide feedback:</p>
+<ul>
+<li><code>loading.tsx</code> for data fetching</li>
+<li><code>error.tsx</code> for graceful error handling</li>
+<li><code>not-found.tsx</code> for 404 cases</li>
+</ul>
+<h3 id="4-leverage-server-components">4. Leverage Server Components</h3>
+<p>Keep components as Server Components unless they need:</p>
+<ul>
+<li>Event handlers (<code>onClick</code>, <code>onChange</code>)</li>
+<li>Hooks (<code>useState</code>, <code>useEffect</code>)</li>
+<li>Browser APIs</li>
+</ul>
+<h3 id="5-prefetch-important-routes">5. Prefetch Important Routes</h3>
+<pre class="hljs"><code><div>// Prefetch on hover
+&lt;Link href=&quot;/products&quot; prefetch={true}&gt;Products&lt;/Link&gt;
+
+// Programmatic prefetch
+const router = useRouter();
+router.prefetch('/dashboard');
+</div></code></pre>
+<h3 id="6-handle-loading-states-granularly">6. Handle Loading States Granularly</h3>
+<pre class="hljs"><code><div>&lt;Suspense fallback={&lt;HeaderSkeleton /&gt;}&gt;
+  &lt;Header /&gt;
+&lt;/Suspense&gt;
+
+&lt;Suspense fallback={&lt;SidebarSkeleton /&gt;}&gt;
+  &lt;Sidebar /&gt;
+&lt;/Suspense&gt;
+
+&lt;Suspense fallback={&lt;ContentSkeleton /&gt;}&gt;
+  &lt;MainContent /&gt;
+&lt;/Suspense&gt;
+</div></code></pre>
+<h3 id="7-use-route-groups-for-layouts">7. Use Route Groups for Layouts</h3>
+<p>Avoid layout pollution by grouping routes:</p>
+<pre class="hljs"><code><div>app/
+├── (with-sidebar)/
+│   ├── layout.tsx      # Has sidebar
+│   ├── dashboard/
+│   └── settings/
+└── (without-sidebar)/
+    ├── layout.tsx      # No sidebar
+    ├── login/
+    └── register/
+</div></code></pre>
+<hr>
+<h2 id="quick-reference">Quick Reference</h2>
+<h3 id="file-conventions">File Conventions</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page.tsx</code></td>
+<td>Unique UI for a route</td>
+</tr>
+<tr>
+<td><code>layout.tsx</code></td>
+<td>Shared UI wrapper</td>
+</tr>
+<tr>
+<td><code>loading.tsx</code></td>
+<td>Loading UI</td>
+</tr>
+<tr>
+<td><code>error.tsx</code></td>
+<td>Error UI</td>
+</tr>
+<tr>
+<td><code>not-found.tsx</code></td>
+<td>404 UI</td>
+</tr>
+<tr>
+<td><code>template.tsx</code></td>
+<td>Re-rendered layout</td>
+</tr>
+<tr>
+<td><code>default.tsx</code></td>
+<td>Parallel route fallback</td>
+</tr>
+<tr>
+<td><code>route.ts</code></td>
+<td>API endpoint</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dynamic-route-syntax">Dynamic Route Syntax</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Example</th>
+<th>Match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[param]</code></td>
+<td><code>[id]</code></td>
+<td><code>/1</code></td>
+</tr>
+<tr>
+<td><code>[...param]</code></td>
+<td><code>[...slug]</code></td>
+<td><code>/a/b/c</code></td>
+</tr>
+<tr>
+<td><code>[[...param]]</code></td>
+<td><code>[[...slug]]</code></td>
+<td><code>/</code>, <code>/a/b</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="intercepting-route-syntax">Intercepting Route Syntax</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Match Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(.)</code></td>
+<td>Same level</td>
+</tr>
+<tr>
+<td><code>(..)</code></td>
+<td>One level up</td>
+</tr>
+<tr>
+<td><code>(..)(..)</code></td>
+<td>Two levels up</td>
+</tr>
+<tr>
+<td><code>(...)</code></td>
+<td>Root level</td>
+</tr>
+</tbody>
+</table>
+<h3 id="navigation-methods">Navigation Methods</h3>
+<pre class="hljs"><code><div>// Client Component
+import { useRouter } from 'next/navigation';
+const router = useRouter();
+router.push('/path');
+router.replace('/path');
+router.back();
+router.refresh();
+
+// Server Component
+import { redirect } from 'next/navigation';
+redirect('/path');
+
+// Component
+import Link from 'next/link';
+&lt;Link href=&quot;/path&quot;&gt;Link&lt;/Link&gt;
+</div></code></pre>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Next.js App Router provides a powerful, file-system based routing solution with:</p>
+<ul>
+<li><strong>Intuitive file conventions</strong> for pages, layouts, and special states</li>
+<li><strong>Flexible dynamic routing</strong> for data-driven pages</li>
+<li><strong>Advanced patterns</strong> like parallel and intercepting routes</li>
+<li><strong>Built-in optimizations</strong> for loading and error states</li>
+</ul>
+<p>The modal pattern demonstrated in this tutorial showcases how these features work together to create sophisticated, production-ready user experiences.</p>
+<p>Happy routing! 🚀</p>
+
+</body>
+
+</html>
